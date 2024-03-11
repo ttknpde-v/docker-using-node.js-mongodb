@@ -1,0 +1,41 @@
+version: '3'
+########################################################################################################################
+services:
+  database:
+    container_name: mongo # define container name
+    restart: always # I ask docker-compose.yml to always restart this container if it fails.
+    image: mongo:latest # REPOSITORY : TAG of image
+    environment:
+      ###### for accessing cmd like mongosh -u ttknpdev -p 12345 --authenticationDatabase "admin"
+      #- MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_USERNAME=ttknpdev
+      - MONGO_INITDB_ROOT_PASSWORD=12345
+    ports:
+      - '27017:27017'
+    volumes:
+      ###### second way use with your volume for storing data (use volume name instead folder name)
+      - data:/data/db
+  #
+  #
+  backend:
+    container_name: nodejs
+    build:
+      context: . # relative to docker-compose command running directory (.) means this folder
+      dockerfile: docker/Dockerfile # specify path to Dockerfile it starts on current folder application
+    image: nodejs
+    # depends_on: # depends_on use to set the order in which services must start and stop.
+    #  - database
+    ports:
+      - '8000:8000'
+    links: # to link containers over a network. When we link containers, Docker creates environment variables and adds containers to the known hosts list
+      - database
+########################################################################################################################
+volumes:
+  data: # define volume name
+    driver: local # use only current pc
+########################################################################################################################
+###### Default Compose sets up a single network for your app.
+###### Each container for a service joins the default network and is both reachable
+###### By other containers on that network, and discoverable by the service's name.
+
+

@@ -1,0 +1,21 @@
+{
+  "name": "build-basic-api-using-node-and-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./controller/execute.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./controller/execute.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.3",
+    "mongoose": "^8.2.1",
+    "process": "^0.11.10",
+    "winston": "^3.12.0"
+  }
+}
